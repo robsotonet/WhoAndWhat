@@ -1,0 +1,507 @@
+{
+  "projectName": "WhoAndWhat",
+  "version": "1.0.0",
+  "description": "Smart Task Management with Social & AI Integration - Bilingual Design System",
+  "platforms": ["web", "desktop", "mobile"],
+  "languages": ["en", "es"],
+  
+  "typography": {
+    "fontFamilies": {
+      "primary": {
+        "name": "Inter",
+        "fallback": "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        "usage": ["ui", "body", "buttons", "labels", "calendar", "tasks"],
+        "description": "Highly readable, modern, optimized for digital interfaces",
+        "weights": [300, 400, 500, 600, 700],
+        "alternative": "Roboto"
+      },
+      "secondary": {
+        "name": "Poppins",
+        "fallback": "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+        "usage": ["headers", "titles", "dashboard", "motivational"],
+        "description": "Rounded, friendly, motivational tone",
+        "weights": [400, 500, 600, 700],
+        "alternative": "Montserrat"
+      },
+      "accent": {
+        "name": "Playfair Display",
+        "fallback": "Georgia, 'Times New Roman', serif",
+        "usage": ["motivational-banner", "quotes", "inspirational"],
+        "description": "Elegant and emotional tone for motivational content",
+        "weights": [400, 500, 600, 700],
+        "alternative": "Merriweather"
+      }
+    },
+    
+    "scale": {
+      "mobile": {
+        "xs": "0.75rem",    // 12px
+        "sm": "0.875rem",   // 14px
+        "base": "1rem",     // 16px - minimum for mobile body
+        "lg": "1.125rem",   // 18px
+        "xl": "1.25rem",    // 20px
+        "2xl": "1.5rem",    // 24px
+        "3xl": "1.875rem",  // 30px
+        "4xl": "2.25rem",   // 36px
+        "5xl": "3rem"       // 48px
+      },
+      "desktop": {
+        "xs": "0.75rem",    // 12px
+        "sm": "0.875rem",   // 14px
+        "base": "1rem",     // 16px
+        "lg": "1.125rem",   // 18px
+        "xl": "1.25rem",    // 20px
+        "2xl": "1.5rem",    // 24px
+        "3xl": "1.875rem",  // 30px
+        "4xl": "2.25rem",   // 36px
+        "5xl": "3rem",      // 48px
+        "6xl": "3.75rem",   // 60px
+        "7xl": "4.5rem"     // 72px
+      }
+    },
+    
+    "fontWeights": {
+      "light": 300,
+      "regular": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700
+    },
+    
+    "lineHeights": {
+      "tight": 1.25,
+      "snug": 1.375,
+      "normal": 1.5,
+      "relaxed": 1.625,
+      "loose": 2
+    },
+    
+    "usage": {
+      "body": {
+        "font": "Inter",
+        "weight": 400,
+        "description": "Regular body text, descriptions, lists"
+      },
+      "emphasis": {
+        "font": "Inter",
+        "weight": "500-600",
+        "description": "Emphasized body text, important labels"
+      },
+      "headings": {
+        "font": "Poppins",
+        "weight": "600-700",
+        "description": "Page titles, section headers, dashboard metrics"
+      },
+      "buttons": {
+        "font": "Inter",
+        "weight": "500-600",
+        "description": "Button text, interactive elements"
+      },
+      "labels": {
+        "font": "Inter",
+        "weight": 400,
+        "description": "Form labels, UI labels, hints"
+      },
+      "motivational": {
+        "font": "Playfair Display",
+        "weight": "400-600",
+        "description": "Motivational quotes, inspirational text"
+      }
+    }
+  },
+  
+  "colors": {
+    "text": {
+      "primary": {
+        "value": "#212121",
+        "description": "Dark gray for headings and main content",
+        "usage": ["headings", "important-text", "key-labels"],
+        "contrast": "AAA compliant on light backgrounds"
+      },
+      "secondary": {
+        "value": "#757575",
+        "description": "Medium gray for supporting text",
+        "usage": ["supporting-text", "descriptions", "hints", "helper-text"],
+        "contrast": "AA compliant on light backgrounds"
+      },
+      "link": {
+        "value": "#3F51B5",
+        "description": "Indigo blue for clickable elements",
+        "usage": ["hyperlinks", "interactive-text", "navigation-links"],
+        "hover": "#303F9F",
+        "active": "#1A237E"
+      },
+      "onGradient": {
+        "value": "#FFFFFF",
+        "description": "White text for use on gradient backgrounds",
+        "usage": ["gradient-buttons", "primary-actions"]
+      }
+    },
+    
+    "backgrounds": {
+      "primary": {
+        "value": "#F5F5F5",
+        "description": "Light gray main app background",
+        "usage": ["app-canvas", "main-screens"]
+      },
+      "surface": {
+        "value": "#FFFFFF",
+        "description": "White background for cards and containers",
+        "usage": ["cards", "modals", "input-containers", "panels"]
+      },
+      "overlay": {
+        "value": "rgba(0, 0, 0, 0.5)",
+        "description": "Semi-transparent overlay for modals",
+        "usage": ["modal-backdrop", "loading-overlay"]
+      }
+    },
+    
+    "borders": {
+      "default": {
+        "value": "#E0E0E0",
+        "description": "Light neutral gray for UI separation",
+        "usage": ["dividers", "component-outlines", "section-borders"]
+      },
+      "focus": {
+        "value": "#3F51B5",
+        "description": "Blue border for focused elements",
+        "usage": ["form-focus", "interactive-focus"]
+      }
+    },
+    
+    "actions": {
+      "primary": {
+        "gradient": {
+          "from": "#3F51B5",
+          "to": "#009688",
+          "description": "Indigo to Teal gradient for primary actions"
+        },
+        "usage": ["primary-buttons", "cta-elements", "navigation-highlights"],
+        "textColor": "#FFFFFF",
+        "hover": {
+          "from": "#303F9F",
+          "to": "#00695C"
+        },
+        "disabled": {
+          "from": "#BDBDBD",
+          "to": "#9E9E9E"
+        }
+      },
+      "secondary": {
+        "value": "#E0E0E0",
+        "description": "Light gray for secondary actions",
+        "textColor": "#212121",
+        "hover": "#D0D0D0"
+      }
+    },
+    
+    "status": {
+      "success": {
+        "value": "#4CAF50",
+        "light": "#E8F5E8",
+        "usage": ["success-messages", "completed-tasks", "positive-feedback"]
+      },
+      "warning": {
+        "value": "#FF9800",
+        "light": "#FFF3E0",
+        "usage": ["warning-messages", "due-soon", "attention-needed"]
+      },
+      "error": {
+        "value": "#F44336",
+        "light": "#FFEBEE",
+        "usage": ["error-messages", "overdue-tasks", "validation-errors"]
+      },
+      "info": {
+        "value": "#2196F3",
+        "light": "#E3F2FD",
+        "usage": ["info-messages", "tips", "neutral-feedback"]
+      }
+    },
+    
+    "categories": {
+      "todos": {
+        "primary": "#3F51B5",
+        "light": "#E8EAF6",
+        "description": "Indigo for general to-do tasks"
+      },
+      "ideas": {
+        "primary": "#9C27B0",
+        "light": "#F3E5F5",
+        "description": "Purple for creative ideas and brainstorming"
+      },
+      "appointments": {
+        "primary": "#FF5722",
+        "light": "#FBE9E7",
+        "description": "Deep orange for appointments and meetings"
+      },
+      "bills": {
+        "primary": "#795548",
+        "light": "#EFEBE9",
+        "description": "Brown for bill reminders and financial tasks"
+      },
+      "projects": {
+        "primary": "#607D8B",
+        "light": "#ECEFF1",
+        "description": "Blue grey for projects and complex tasks"
+      }
+    }
+  },
+  
+  "spacing": {
+    "scale": {
+      "0": "0",
+      "1": "0.25rem",   // 4px
+      "2": "0.5rem",    // 8px
+      "3": "0.75rem",   // 12px
+      "4": "1rem",      // 16px
+      "5": "1.25rem",   // 20px
+      "6": "1.5rem",    // 24px
+      "7": "1.75rem",   // 28px
+      "8": "2rem",      // 32px
+      "10": "2.5rem",   // 40px
+      "12": "3rem",     // 48px
+      "16": "4rem",     // 64px
+      "20": "5rem",     // 80px
+      "24": "6rem"      // 96px
+    },
+    
+    "semantic": {
+      "xs": "0.25rem",
+      "sm": "0.5rem",
+      "md": "1rem",
+      "lg": "1.5rem",
+      "xl": "2rem",
+      "2xl": "3rem"
+    },
+    
+    "component": {
+      "button-padding-x": "1.5rem",
+      "button-padding-y": "0.75rem",
+      "card-padding": "1.5rem",
+      "section-margin": "2rem",
+      "container-padding": {
+        "mobile": "1rem",
+        "desktop": "2rem"
+      }
+    }
+  },
+  
+  "layout": {
+    "grid": {
+      "columns": 12,
+      "maxWidth": "1200px",
+      "gutters": {
+        "mobile": "16px",
+        "desktop": "24px"
+      },
+      "margins": {
+        "mobile": "16px",
+        "desktop": "32px"
+      }
+    },
+    
+    "breakpoints": {
+      "sm": "480px",
+      "md": "768px",
+      "lg": "992px",
+      "xl": "1200px",
+      "2xl": "1536px"
+    },
+    
+    "components": {
+      "dashboard-cards": {
+        "desktop": "4 columns",
+        "mobile": "full width"
+      },
+      "motivational-banner": {
+        "desktop": "12 columns",
+        "mobile": "full width"
+      },
+      "calendar-section": {
+        "desktop": "8 columns",
+        "mobile": "full width"
+      },
+      "sidebar": {
+        "width": "280px",
+        "collapsed": "64px"
+      }
+    }
+  },
+  
+  "iconography": {
+    "style": {
+      "type": "outlined",
+      "strokeWeight": "1.5-2px",
+      "cornerRadius": "slightly rounded",
+      "tone": "friendly, modern, clean"
+    },
+    
+    "libraries": {
+      "primary": "Heroicons",
+      "alternatives": ["Phosphor Icons", "Material Symbols"]
+    },
+    
+    "sizes": {
+      "xs": "16px",
+      "sm": "20px",
+      "md": "24px",
+      "lg": "32px",
+      "xl": "48px"
+    },
+    
+    "usage": {
+      "navigation": {
+        "icons": ["home", "calendar", "tasks", "contacts", "settings"],
+        "states": "filled for active, outline for inactive"
+      },
+      "actions": {
+        "icons": ["add", "edit", "delete", "share", "save"],
+        "pairing": "always pair with text labels"
+      },
+      "status": {
+        "icons": ["check-circle", "exclamation-triangle", "information-circle", "x-circle"],
+        "colors": "color-coded (green, yellow, blue, red)"
+      },
+      "ai-features": {
+        "icons": ["sparkles", "magic-wand", "cpu"],
+        "effects": "subtle animation or glow optional"
+      }
+    },
+    
+    "accessibility": {
+      "minSize": "24px",
+      "touchTarget": "44px",
+      "contrast": "WCAG compliant",
+      "labels": "always include aria-label or visible text"
+    }
+  },
+  
+  "components": {
+    "buttons": {
+      "primary": {
+        "background": "gradient(#3F51B5, #009688)",
+        "color": "#FFFFFF",
+        "padding": "12px 24px",
+        "borderRadius": "8px",
+        "fontSize": "1rem",
+        "fontWeight": 600,
+        "minHeight": "44px"
+      },
+      "secondary": {
+        "background": "#E0E0E0",
+        "color": "#212121",
+        "padding": "12px 24px",
+        "borderRadius": "8px",
+        "fontSize": "1rem",
+        "fontWeight": 500,
+        "minHeight": "44px"
+      },
+      "text": {
+        "background": "transparent",
+        "color": "#3F51B5",
+        "padding": "8px 16px",
+        "fontSize": "1rem",
+        "fontWeight": 500
+      }
+    },
+    
+    "forms": {
+      "input": {
+        "background": "#FFFFFF",
+        "border": "1px solid #E0E0E0",
+        "borderRadius": "8px",
+        "padding": "12px 16px",
+        "fontSize": "1rem",
+        "minHeight": "44px",
+        "focusBorder": "#3F51B5"
+      },
+      "label": {
+        "fontSize": "0.875rem",
+        "fontWeight": 500,
+        "color": "#212121",
+        "marginBottom": "4px"
+      },
+      "error": {
+        "fontSize": "0.75rem",
+        "color": "#F44336",
+        "marginTop": "4px"
+      }
+    },
+    
+    "cards": {
+      "default": {
+        "background": "#FFFFFF",
+        "border": "1px solid #E0E0E0",
+        "borderRadius": "12px",
+        "padding": "24px",
+        "shadow": "0 2px 4px rgba(0, 0, 0, 0.1)"
+      },
+      "elevated": {
+        "background": "#FFFFFF",
+        "borderRadius": "12px",
+        "padding": "24px",
+        "shadow": "0 4px 12px rgba(0, 0, 0, 0.1)"
+      }
+    }
+  },
+  
+  "accessibility": {
+    "contrast": {
+      "minimum": "4.5:1",
+      "enhanced": "7:1",
+      "tool": "WebAIM Contrast Checker"
+    },
+    "focus": {
+      "outline": "2px solid #3F51B5",
+      "offset": "2px",
+      "visible": "always visible on interactive elements"
+    },
+    "text": {
+      "minSize": "16px",
+      "scaling": "rem/em units for responsive scaling"
+    },
+    "touch": {
+      "minTarget": "44px",
+      "spacing": "8px between targets"
+    }
+  },
+  
+  "animations": {
+    "duration": {
+      "fast": "150ms",
+      "normal": "300ms",
+      "slow": "500ms"
+    },
+    "easing": {
+      "ease": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+      "easeOut": "cubic-bezier(0, 0, 0.2, 1)"
+    },
+    "usage": {
+      "hover": "150ms ease",
+      "focus": "150ms ease",
+      "modal": "300ms ease",
+      "page-transition": "300ms ease"
+    }
+  },
+  
+  "bilingual": {
+    "considerations": {
+      "fonts": "All fonts support Latin character sets for EN/ES",
+      "textExpansion": "Spanish text ~20-30% longer than English",
+      "rtl": "Not required for current languages",
+      "fontWeights": "Consistent across translations"
+    }
+  },
+  
+  "themes": {
+    "light": {
+      "status": "default",
+      "colors": "as defined above"
+    },
+    "dark": {
+      "status": "future consideration",
+      "note": "Not implemented in v1.0"
+    }
+  }
+}
