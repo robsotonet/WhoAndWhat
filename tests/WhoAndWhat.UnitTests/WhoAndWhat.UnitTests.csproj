@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\WhoAndWhat.Core\WhoAndWhat.Core\WhoAndWhat.Core.csproj" />
+    <ProjectReference Include="..\..\src\WhoAndWhat.Application\WhoAndWhat.Application\WhoAndWhat.Application.csproj" />
+  </ItemGroup>
+
+</Project>

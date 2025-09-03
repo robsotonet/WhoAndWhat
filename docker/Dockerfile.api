@@ -1,0 +1,56 @@
+# ASP.NET Core API Dockerfile with hot reload support for development
+
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+WORKDIR /app
+EXPOSE 80
+
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /app
+
+# Copy solution and project files
+COPY WhoAndWhat.sln ./
+COPY Directory.Build.props ./
+COPY src/WhoAndWhat.API/WhoAndWhat.API/*.csproj ./src/WhoAndWhat.API/WhoAndWhat.API/
+COPY src/WhoAndWhat.Application/WhoAndWhat.Application/*.csproj ./src/WhoAndWhat.Application/WhoAndWhat.Application/
+COPY src/WhoAndWhat.Core/WhoAndWhat.Core/*.csproj ./src/WhoAndWhat.Core/WhoAndWhat.Core/
+COPY src/WhoAndWhat.Infrastructure/WhoAndWhat.Infrastructure/*.csproj ./src/WhoAndWhat.Infrastructure/WhoAndWhat.Infrastructure/
+COPY src/WhoAndWhat.Shared/WhoAndWhat.Shared/*.csproj ./src/WhoAndWhat.Shared/WhoAndWhat.Shared/
+
+# Restore dependencies
+RUN dotnet restore src/WhoAndWhat.API/WhoAndWhat.API/WhoAndWhat.API.csproj
+
+# Copy source code
+COPY src/ ./src/
+
+# Build application
+RUN dotnet build src/WhoAndWhat.API/WhoAndWhat.API/WhoAndWhat.API.csproj -c Release -o /app/build --no-restore
+
+FROM build AS publish
+RUN dotnet publish src/WhoAndWhat.API/WhoAndWhat.API/WhoAndWhat.API.csproj -c Release -o /app/publish --no-restore
+
+# Development stage with hot reload
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS development
+WORKDIR /app
+
+# Install dotnet-ef tool for database migrations
+RUN dotnet tool install --global dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
+
+# Copy solution and project files
+COPY WhoAndWhat.sln ./
+COPY Directory.Build.props ./
+COPY src/WhoAndWhat.API/WhoAndWhat.API/*.csproj ./src/WhoAndWhat.API/WhoAndWhat.API/
+COPY src/WhoAndWhat.Application/WhoAndWhat.Application/*.csproj ./src/WhoAndWhat.Application/WhoAndWhat.Application/
+COPY src/WhoAndWhat.Core/WhoAndWhat.Core/*.csproj ./src/WhoAndWhat.Core/WhoAndWhat.Core/
+COPY src/WhoAndWhat.Infrastructure/WhoAndWhat.Infrastructure/*.csproj ./src/WhoAndWhat.Infrastructure/WhoAndWhat.Infrastructure/
+COPY src/WhoAndWhat.Shared/WhoAndWhat.Shared/*.csproj ./src/WhoAndWhat.Shared/WhoAndWhat.Shared/
+
+# Restore dependencies
+RUN dotnet restore src/WhoAndWhat.API/WhoAndWhat.API/WhoAndWhat.API.csproj
+
+EXPOSE 80
+
+# Default to development stage
+FROM development AS final
+WORKDIR /app/src/WhoAndWhat.API/WhoAndWhat.API
+CMD ["dotnet", "run", "--urls", "http://0.0.0.0:80"]

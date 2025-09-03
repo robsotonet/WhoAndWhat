@@ -1,0 +1,69 @@
+# Docker Compose override for development environment
+# This file extends docker-compose.yml with development-specific settings
+
+version: '3.8'
+
+services:
+  # Development overrides for PostgreSQL
+  postgres:
+    environment:
+      POSTGRES_DB: whoandwhat_dev
+      POSTGRES_USER: whoandwhat_user
+      POSTGRES_PASSWORD: dev_password_123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ./docker/init-scripts:/docker-entrypoint-initdb.d:ro
+
+  # Development overrides for Redis
+  redis:
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_dev_data:/data
+
+  # Development overrides for API
+  api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_LOGGING__LOGLEVEL__DEFAULT=Information
+      - ASPNETCORE_LOGGING__LOGLEVEL__MICROSOFT=Warning
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=whoandwhat_dev;Username=whoandwhat_user;Password=dev_password_123;Pooling=true;Minimum Pool Size=5;Maximum Pool Size=100;
+      - ConnectionStrings__Redis=redis:6379
+      - DOTNET_WATCH_RESTART_ON_RUDE_EDIT=true
+      - DOTNET_USE_POLLING_FILE_WATCHER=true
+    volumes:
+      # Enable hot reload by mounting source code
+      - ./src:/app/src:delegated
+      - ./Directory.Build.props:/app/Directory.Build.props:ro
+      - ./WhoAndWhat.sln:/app/WhoAndWhat.sln:ro
+    ports:
+      - "5000:80"
+      - "5002:443"  # HTTPS port for development
+
+  # Development overrides for Blazor
+  blazor:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_LOGGING__LOGLEVEL__DEFAULT=Information
+      - ASPNETCORE_LOGGING__LOGLEVEL__MICROSOFT=Warning
+      - ApiSettings__BaseUrl=http://localhost:5000
+      - DOTNET_WATCH_RESTART_ON_RUDE_EDIT=true
+      - DOTNET_USE_POLLING_FILE_WATCHER=true
+    volumes:
+      # Enable hot reload by mounting source code
+      - ./src:/app/src:delegated
+      - ./Directory.Build.props:/app/Directory.Build.props:ro
+      - ./WhoAndWhat.sln:/app/WhoAndWhat.sln:ro
+    ports:
+      - "5001:80"
+      - "5003:443"  # HTTPS port for development
+
+volumes:
+  postgres_dev_data:
+    driver: local
+  redis_dev_data:
+    driver: local

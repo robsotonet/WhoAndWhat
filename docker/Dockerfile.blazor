@@ -1,0 +1,50 @@
+# Blazor Web App Dockerfile with hot reload support for development
+
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+WORKDIR /app
+EXPOSE 80
+
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /app
+
+# Copy solution and project files
+COPY WhoAndWhat.sln ./
+COPY Directory.Build.props ./
+COPY src/WhoAndWhat.Blazor/WhoAndWhat.Blazor/*.csproj ./src/WhoAndWhat.Blazor/WhoAndWhat.Blazor/
+COPY src/WhoAndWhat.Application/WhoAndWhat.Application/*.csproj ./src/WhoAndWhat.Application/WhoAndWhat.Application/
+COPY src/WhoAndWhat.Core/WhoAndWhat.Core/*.csproj ./src/WhoAndWhat.Core/WhoAndWhat.Core/
+COPY src/WhoAndWhat.Shared/WhoAndWhat.Shared/*.csproj ./src/WhoAndWhat.Shared/WhoAndWhat.Shared/
+
+# Restore dependencies
+RUN dotnet restore src/WhoAndWhat.Blazor/WhoAndWhat.Blazor/WhoAndWhat.Blazor.csproj
+
+# Copy source code
+COPY src/ ./src/
+
+# Build application
+RUN dotnet build src/WhoAndWhat.Blazor/WhoAndWhat.Blazor/WhoAndWhat.Blazor.csproj -c Release -o /app/build --no-restore
+
+FROM build AS publish
+RUN dotnet publish src/WhoAndWhat.Blazor/WhoAndWhat.Blazor/WhoAndWhat.Blazor.csproj -c Release -o /app/publish --no-restore
+
+# Development stage with hot reload
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS development
+WORKDIR /app
+
+# Copy solution and project files
+COPY WhoAndWhat.sln ./
+COPY Directory.Build.props ./
+COPY src/WhoAndWhat.Blazor/WhoAndWhat.Blazor/*.csproj ./src/WhoAndWhat.Blazor/WhoAndWhat.Blazor/
+COPY src/WhoAndWhat.Application/WhoAndWhat.Application/*.csproj ./src/WhoAndWhat.Application/WhoAndWhat.Application/
+COPY src/WhoAndWhat.Core/WhoAndWhat.Core/*.csproj ./src/WhoAndWhat.Core/WhoAndWhat.Core/
+COPY src/WhoAndWhat.Shared/WhoAndWhat.Shared/*.csproj ./src/WhoAndWhat.Shared/WhoAndWhat.Shared/
+
+# Restore dependencies
+RUN dotnet restore src/WhoAndWhat.Blazor/WhoAndWhat.Blazor/WhoAndWhat.Blazor.csproj
+
+EXPOSE 80
+
+# Default to development stage
+FROM development AS final
+WORKDIR /app/src/WhoAndWhat.Blazor/WhoAndWhat.Blazor
+CMD ["dotnet", "run", "--urls", "http://0.0.0.0:80"]

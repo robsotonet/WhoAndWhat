@@ -1,0 +1,82 @@
+# .dockerignore for WhoAndWhat project
+
+# Git files
+.git
+.gitignore
+.gitattributes
+
+# Docker files
+docker-compose*
+Dockerfile*
+.dockerignore
+
+# Documentation
+README.md
+CHANGELOG.md
+docs/
+*.md
+
+# Build artifacts
+**/bin/
+**/obj/
+**/out/
+**/publish/
+
+# IDE files
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Test results
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# NuGet
+**/packages/
+*.nupkg
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# Node modules (if any)
+node_modules/
+
+# Environment files with secrets
+.env.local
+.env.production
+
+# Certificate files
+*.pfx
+*.p12
+*.pem
+*.key
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Backup files
+*.bak
+*~
