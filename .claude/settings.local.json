@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet new:*)",
+      "Bash(dotnet sln add:*)",
+      "Bash(dotnet add:*)",
+      "Bash(dotnet build)",
+      "Bash(dotnet build:*)",
+      "Bash(dotnet sln remove:*)",
+      "Bash(dotnet clean:*)",
+      "Bash(dotnet restore:*)",
+      "Bash(dotnet sln:*)",
+      "Bash(dotnet test:*)",
+      "Bash(docker-compose:*)",
+      "Bash(chmod:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

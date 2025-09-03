@@ -1,0 +1,104 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: whoandwhat-postgres
+    environment:
+      POSTGRES_DB: whoandwhat_dev
+      POSTGRES_USER: whoandwhat_user
+      POSTGRES_PASSWORD: dev_password_123
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/init-scripts:/docker-entrypoint-initdb.d
+    networks:
+      - whoandwhat-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U whoandwhat_user -d whoandwhat_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis for SignalR backplane and caching
+  redis:
+    image: redis:7-alpine
+    container_name: whoandwhat-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - whoandwhat-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  # ASP.NET Core Web API
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    container_name: whoandwhat-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=whoandwhat_dev;Username=whoandwhat_user;Password=dev_password_123
+      - ConnectionStrings__Redis=redis:6379
+    ports:
+      - "5000:80"
+    volumes:
+      - ./src/WhoAndWhat.API:/app/src/WhoAndWhat.API:delegated
+      - ./src/WhoAndWhat.Application:/app/src/WhoAndWhat.Application:delegated
+      - ./src/WhoAndWhat.Core:/app/src/WhoAndWhat.Core:delegated
+      - ./src/WhoAndWhat.Infrastructure:/app/src/WhoAndWhat.Infrastructure:delegated
+      - ./src/WhoAndWhat.Shared:/app/src/WhoAndWhat.Shared:delegated
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - whoandwhat-network
+    restart: unless-stopped
+
+  # Blazor Web Application
+  blazor:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.blazor
+    container_name: whoandwhat-blazor
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ApiSettings__BaseUrl=http://api:80
+    ports:
+      - "5001:80"
+    volumes:
+      - ./src/WhoAndWhat.Blazor:/app/src/WhoAndWhat.Blazor:delegated
+      - ./src/WhoAndWhat.Application:/app/src/WhoAndWhat.Application:delegated
+      - ./src/WhoAndWhat.Shared:/app/src/WhoAndWhat.Shared:delegated
+    depends_on:
+      - api
+    networks:
+      - whoandwhat-network
+    restart: unless-stopped
+
+# Shared network for service communication
+networks:
+  whoandwhat-network:
+    driver: bridge
+
+# Persistent data volumes
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
